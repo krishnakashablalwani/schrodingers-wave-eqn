@@ -42,3 +42,8 @@ This window shows a more complex and dynamic situation called a **superposition*
 ### SciPy Verification (Terminal Output)
 
 When you first run the script, you will see a message in your terminal. This uses the `scipy` library to perform a mathematical check. It calculates the total probability of finding the electron *anywhere* inside the box. The result should be `1.0` (or 100%), confirming that the wave function is correctly "normalized".
+
+
+
+
+Ψ

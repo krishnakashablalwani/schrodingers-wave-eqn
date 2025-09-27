@@ -11,6 +11,8 @@ m = constants.m_e
 L = 1 * 10 ** (-9)
 N = 500
 energy_end = 5
+print("hbar:", hbar)
+print("mass of electron", m)
 
 CANVAS_WIDTH = 800
 CANVAS_HEIGHT = 400
@@ -23,14 +25,23 @@ def psi(n, x):
     return np.sqrt(2 / L) * np.sin(n * np.pi * x / L)
 
 
+print("psi(1, L/2):", psi(1, L / 2))
+
+
 def energy(n):
     return (n**2 * np.pi**2 * hbar**2) / (2 * m * L**2)
+
+
+print("energy(1):", energy(1))
 
 
 def psi_squared(n, x):
     if n == 0:
         return np.zeros_like(x)
     return (2 / L) * (np.sin(n * np.pi * x / L)) ** 2
+
+
+print("psi_squared(1, L/2):", psi_squared(1, L / 2))
 
 
 c1 = 1 / np.sqrt(2)
@@ -40,7 +51,6 @@ psi1 = psi(1, x)
 psi2 = psi(2, x)
 E1 = energy(1)
 E2 = energy(2)
-
 
 fig, ax = plt.subplots()
 
@@ -84,7 +94,6 @@ def animate(t):
 
 
 time_steps = np.linspace(0, 5e-15, 300)
-
 ani = FuncAnimation(fig, animate, frames=time_steps, interval=20, blit=True)
 
 
@@ -145,12 +154,7 @@ class ElectronCloudApp:
                     CANVAS_HEIGHT - 25 - (y_rand / max_prob) * (CANVAS_HEIGHT * 0.8)
                 )
                 self.canvas.create_oval(
-                    canvas_x - 1,
-                    canvas_y - 1,
-                    canvas_x + 1,
-                    canvas_y + 1,
-                    fill="red",
-                    outline="",
+                    canvas_x - 1, canvas_y - 1, canvas_x + 1, canvas_y + 1, fill="red"
                 )
 
 
