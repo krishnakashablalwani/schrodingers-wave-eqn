@@ -14,9 +14,9 @@ energy_end = 50
 print("hbar:", hbar)
 print("mass of electron", m)
 
-CANVAS_WIDTH = 800
-CANVAS_HEIGHT = 400
-NUM_DOTS = 25000
+CANVAS_WIDTH = 1600
+CANVAS_HEIGHT = 800
+NUM_DOTS = 100000
 
 x = np.linspace(0, L, N)
 
@@ -128,7 +128,7 @@ def update_visualization(n_str, canvas, n_label):
             canvas_x = (x_rand / L) * CANVAS_WIDTH
             canvas_y = CANVAS_HEIGHT - 25 - (y_rand / max_prob) * (CANVAS_HEIGHT * 0.8)
             canvas.create_oval(
-                canvas_x - 1, canvas_y - 1, canvas_x + 1, canvas_y + 1, fill="red"
+                canvas_x - 1, canvas_y - 1, canvas_x + 1, canvas_y + 1, fill="white"
             )
 
 
