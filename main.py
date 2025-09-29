@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from scipy import constants
 from scipy.integrate import quad
+import csv
+import os
 
 
 hbar = constants.hbar
@@ -94,6 +96,38 @@ time_steps = np.linspace(0, 5e-15, 300)
 ani = FuncAnimation(fig, animate, frames=time_steps, interval=20, blit=True)
 
 
+def save_animation_data(filename="animation_data.csv"):
+    """Calculates and saves all data points from the animation to a CSV file."""
+    filepath = os.path.join("csv", filename)
+    print(f"Saving animation data to {filepath}...")
+    with open(filepath, "w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(
+            [
+                "time",
+                "x_position",
+                "real_part",
+                "imaginary_part",
+                "probability_density",
+            ]
+        )
+
+        for t in time_steps:
+            term1 = c1 * psi1 * np.exp(-1j * E1 * t / hbar)
+            term2 = c2 * psi2 * np.exp(-1j * E2 * t / hbar)
+            psi_t = term1 + term2
+
+            real_part = np.real(psi_t)
+            imag_part = np.imag(psi_t)
+            prob_density = np.abs(psi_t) ** 2
+
+            for i in range(len(x)):
+                writer.writerow(
+                    [t, x[i], real_part[i], imag_part[i], prob_density[i]]
+                )
+    print("Finished saving animation data.")
+
+
 def update_visualization(n_str, canvas, n_label):
     try:
         n = int(n_str)
@@ -106,30 +140,47 @@ def update_visualization(n_str, canvas, n_label):
     n_label.config(text=f"Energy Level (n): {n}")
     canvas.delete("all")
 
-    canvas.create_line(
-        0, CANVAS_HEIGHT - 20, CANVAS_WIDTH, CANVAS_HEIGHT - 20, fill="gray"
-    )
-    canvas.create_text(
-        CANVAS_WIDTH / 2, CANVAS_HEIGHT - 10, text="Position in Box", fill="white"
-    )
-    canvas.create_text(
-        CANVAS_WIDTH / 2,
-        20,
-        text="|Ψ|² (Probability Density)",
-        fill="white",
-        font=("Arial", 14),
-    )
-    max_prob = 2 / L
-    for _ in range(NUM_DOTS):
-        x_rand = np.random.uniform(0, L)
-        y_rand = np.random.uniform(0, max_prob)
-        prob_at_x = psi_squared(n, x_rand)
-        if y_rand < prob_at_x:
-            canvas_x = (x_rand / L) * CANVAS_WIDTH
-            canvas_y = CANVAS_HEIGHT - 25 - (y_rand / max_prob) * (CANVAS_HEIGHT * 0.8)
-            canvas.create_oval(
-                canvas_x - 1, canvas_y - 1, canvas_x + 1, canvas_y + 1, fill="white"
-            )
+    # --- Save electron cloud data to a CSV file ---
+    filename = f"electron_cloud_n_{n}.csv"
+    filepath = os.path.join("csv", filename)
+    print(f"Saving electron cloud data to {filepath}...")
+    with open(filepath, "w", newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["x_position", "y_position"])  # Write header
+
+        canvas.create_line(
+            0, CANVAS_HEIGHT - 20, CANVAS_WIDTH, CANVAS_HEIGHT - 20, fill="gray"
+        )
+        canvas.create_text(
+            CANVAS_WIDTH / 2, CANVAS_HEIGHT - 10, text="Position in Box", fill="white"
+        )
+        canvas.create_text(
+            CANVAS_WIDTH / 2,
+            20,
+            text="|Ψ|² (Probability Density)",
+            fill="white",
+            font=("Arial", 14),
+        )
+        max_prob = 2 / L
+        dots_plotted = 0
+        for _ in range(NUM_DOTS):
+            x_rand = np.random.uniform(0, L)
+            y_rand = np.random.uniform(0, max_prob)
+            prob_at_x = psi_squared(n, x_rand)
+            if y_rand < prob_at_x:
+                # A dot is valid, save its coordinates
+                writer.writerow([x_rand, y_rand])
+                dots_plotted += 1
+
+                # Draw the dot on the canvas
+                canvas_x = (x_rand / L) * CANVAS_WIDTH
+                canvas_y = (
+                    CANVAS_HEIGHT - 25 - (y_rand / max_prob) * (CANVAS_HEIGHT * 0.8)
+                )
+                canvas.create_oval(
+                    canvas_x - 1, canvas_y - 1, canvas_x + 1, canvas_y + 1, fill="white"
+                )
+    print(f"Finished saving. Plotted and saved {dots_plotted} dots.")
 
 
 def setup_electron_cloud_window():
@@ -167,6 +218,13 @@ def setup_electron_cloud_window():
 
 
 if __name__ == "__main__":
+    # Create a folder for CSV output if it doesn't exist
+    if not os.path.exists("csv"):
+        os.makedirs("csv")
+
+    # Save the data for the animated plot to a CSV file
+    save_animation_data()
+
     total_probability, error_estimate = quad(lambda x: psi_squared(1, x), 0, L)
     electron_cloud_window = setup_electron_cloud_window()
     electron_cloud_window.mainloop()
