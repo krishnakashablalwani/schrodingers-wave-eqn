@@ -141,6 +141,7 @@ def update_visualization(n_str, canvas, n_label):
         if n < 1:
             raise ValueError("Energy level must be a positive integer.")
     except ValueError:
+        # boom boom
         n_label.config(text="Invalid input")
         return
 
