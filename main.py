@@ -103,37 +103,6 @@ time_steps = np.linspace(0, 5e-15, 300)
 ani = FuncAnimation(fig, animate, frames=time_steps, interval=20, blit=True)
 
 
-# save
-def save_animation_data(filename="animation_data.csv"):
-    """Calculates and saves all data points from the animation to a CSV file."""
-    filepath = os.path.join("csv", filename)
-    print(f"Saving animation data to {filepath}...")
-    with open(filepath, "w", newline="") as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(
-            [
-                "time",
-                "x_position",
-                "real_part",
-                "imaginary_part",
-                "probability_density",
-            ]
-        )
-
-        for t in time_steps:
-            term1 = c1 * psi1 * np.exp(-1j * E1 * t / hbar)
-            term2 = c2 * psi2 * np.exp(-1j * E2 * t / hbar)
-            psi_t = term1 + term2
-
-            real_part = np.real(psi_t)
-            imag_part = np.imag(psi_t)
-            prob_density = np.abs(psi_t) ** 2
-
-            for i in range(len(x)):
-                writer.writerow([t, x[i], real_part[i], imag_part[i], prob_density[i]])
-    print("Finished saving animation data.")
-
-
 # interactive electron cloud visualization
 def update_visualization(n_str, canvas, n_label):
     try:
@@ -224,8 +193,6 @@ def setup_electron_cloud_window():
 if __name__ == "__main__":
     if not os.path.exists("csv"):
         os.makedirs("csv")
-
-    save_animation_data()
 
     total_probability, error_estimate = quad(lambda x: psi_squared(1, x), 0, L)
     electron_cloud_window = setup_electron_cloud_window()
