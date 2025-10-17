@@ -122,14 +122,6 @@ This writes analogous images into `particle in a box/2D/pics/`, e.g. 2D eigenfun
 - The interactive app uses rejection sampling to produce visually intuitive dot clouds; it’s stochastic and not a line plot of |Ψ|².
 - Time evolution in the 1D/2D scripts is limited to simple, user‑defined superpositions to illustrate interference and beat periods.
 
-## Contributing
-
-Issues and PRs are welcome. Ideas that would be great additions:
-
-- Add an option to animate time evolution (matplotlib FuncAnimation or Tkinter loop).
-- Add a finite well or harmonic oscillator example for comparison.
-- Export figures at publication resolution with consistent style.
-
 ## Acknowledgments
 
 - Physical constants from `scipy.constants`.
