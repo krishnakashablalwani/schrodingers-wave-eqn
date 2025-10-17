@@ -1,4 +1,4 @@
-Schrödinger’s Wave Equation — Particle in a Box (1D/2D) + Interactive Electron Cloud
+# Schrödinger’s Wave Equation — Particle in a Box (1D/2D) + Interactive Electron Cloud
 
 ## Overview
 
