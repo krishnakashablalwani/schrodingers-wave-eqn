@@ -42,11 +42,14 @@ particle in a box/
 	2D/
 		main.py                 # Generates 2D figures into pics/
 		pics/                   # Output images (created at runtime)
+	3D/
+		main.py                 # Generates 3D figures into pics/
+		pics/                   # Output images (created at runtime)
 ```
 
 ## Requirements
 
-- Python 3.9+ (3.10 or newer recommended)
+- Python 3.9+ (3.12 or newer recommended)
 - Packages: `numpy`, `scipy`, `matplotlib`
 - Tkinter (ships with the standard CPython installers on Windows/macOS; on some Linux distros you may need to install it via your package manager, e.g. `sudo apt-get install python3-tk`).
 
@@ -58,8 +61,12 @@ source .venv/Scripts/activate  # Windows Git Bash
 pip install -r requirements.txt
 ```
 
-Tip: If you use Command Prompt or PowerShell on Windows, the activation command is slightly different (e.g., `.venv\Scripts\activate` for cmd.exe or `.
-venv\Scripts\Activate.ps1` for PowerShell).
+Windows notes:
+
+- Command Prompt (cmd.exe):
+	- `.venv\Scripts\activate`
+- PowerShell:
+	- `./.venv/Scripts/Activate.ps1`
 
 ## How to run
 
@@ -101,6 +108,15 @@ This will print a short summary and write several images into `particle in a box
 
 Parameters at the top of the script control well size (`L`), mass (`MASS_MODE`/`MVAL`), how many levels to show (`NMAX`), and the superposition (`COEFFS`, `N_VALS`).
 
+Parameters (1D script quick reference):
+
+- `L` (float, meters): well width (default 1e-9)
+- `MASS_MODE` ("electron"|other): if "electron", uses electron mass; otherwise `MVAL`
+- `MVAL` (float, kg): custom mass (used when `MASS_MODE` != "electron")
+- `NMAX` (int): number of levels to plot
+- `COEFFS` (list[complex]): coefficients for time-evolving superposition
+- `N_VALS` (list[int]): corresponding quantum numbers for `COEFFS`
+
 ### 3) 2D figures (modes on a square well)
 
 ```bash
@@ -108,6 +124,62 @@ python "particle in a box/2D/main.py"
 ```
 
 This writes analogous images into `particle in a box/2D/pics/`, e.g. 2D eigenfunctions as imshow heatmaps, energy stacks, and time-snapshot densities for a 2-mode superposition.
+
+Parameters (2D script quick reference):
+
+- `L` (float, meters): well width (default 1e-9)
+- `MASS_MODE` ("electron"|other): if "electron", uses electron mass; otherwise `MVAL`
+- `MVAL` (float, kg): custom mass (used when `MASS_MODE` != "electron")
+- `NMAX` (int): max mode index along each axis when enumerating (nx, ny)
+- `COEFFS` (list[complex]): coefficients for time-evolving superposition
+- `N_VALS` (list[tuple[int,int]]): corresponding (nx, ny) pairs for `COEFFS`
+
+Parameters (interactive app quick reference, `main.py`):
+
+- `L` (float, meters): well width (default 1e-9)
+- `N` (int): spatial sample points for convenience
+- `NUM_DOTS` (int): number of rejection-sampled points (performance/quality)
+- `CANVAS_WIDTH`, `CANVAS_HEIGHT` (int): pixel size of the Tk canvas
+
+### 4) 3D figures (modes in a cubic well)
+
+```bash
+python "particle in a box/3D/main.py"
+```
+
+This generates 3D energy level plots (including degeneracies), 2D slices of eigenfunctions at z=L/2, and time-snapshot densities, saved under `particle in a box/3D/pics/`.
+
+Parameters (3D script quick reference):
+
+- `L` (float, meters): well width (default 1e-9)
+- `MASS_MODE` ("electron"|other): if "electron", uses electron mass; otherwise `MVAL`
+- `MVAL` (float, kg): custom mass (used when `MASS_MODE` != "electron")
+- `NMAX` (int): max mode index along each axis when enumerating (nx, ny, nz)
+- `COEFFS` (list[complex]): coefficients for time-evolving superposition
+- `N_VALS` (list[tuple[int,int,int]]): corresponding (nx, ny, nz) triplets for `COEFFS`
+
+## Example outputs
+
+Running the 1D and 2D scripts will save PNG files into their respective `pics/` folders. Typical files include:
+
+- `energy_levels.png`, `energy_vs_n.png`
+- `eigenfunctions.png`, `eigenfunction_n{1..4}.png`
+- `psi_levels.png`, `density_levels.png`
+- `probability_density_snapshots.png`
+
+## Screenshots
+
+Below are a few representative visuals (paths are relative; run the 1D/2D scripts to generate them):
+
+![1D eigenfunctions](particle%20in%20a%20box/1D/pics/eigenfunctions.png)
+
+![1D energy levels](particle%20in%20a%20box/1D/pics/energy_levels.png)
+
+![2D energy levels](particle%20in%20a%20box/2D/pics/energy_levels.png)
+
+![3D energy levels](particle%20in%20a%20box/3D/pics/energy_levels.png)
+
+![2D eigenfunctions (heatmaps)](particle%20in%20a%20box/2D/pics/eigenfunctions.png)
 
 ## Troubleshooting
 

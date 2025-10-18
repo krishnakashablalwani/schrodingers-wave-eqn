@@ -121,3 +121,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+print("Executing 1D version...")
