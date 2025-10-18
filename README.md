@@ -1,5 +1,7 @@
 # Schrödinger’s Wave Equation — Particle in a Box (1D/2D) + Interactive Electron Cloud
 
+> Quick links: [1D README](particle%20in%20a%20box/1D/README.md) · [2D README](particle%20in%20a%20box/2D/README.md) · [3D README](particle%20in%20a%20box/3D/README.md)
+
 ## Overview
 
 This repository contains small, focused Python tools to explore the time‑independent Schrödinger equation for an infinite potential well (aka the “particle in a box”). It includes:
@@ -24,6 +26,13 @@ In 2D on a square domain 0 ≤ x ≤ L, 0 ≤ y ≤ L, the eigenstates and energ
 $$
 \psi_{n_x,n_y}(x,y) = \frac{2}{L} \sin\left(\frac{n_x\pi x}{L}\right) \sin\left(\frac{n_y\pi y}{L}\right), \quad
 E_{n_x,n_y} = \frac{\pi^2\hbar^2}{2 m L^2} (n_x^2 + n_y^2).
+$$
+
+In 3D on a cube 0 ≤ x,y,z ≤ L, the solutions are
+
+$$
+\psi_{n_x,n_y,n_z}(x,y,z) = \left(\frac{2}{L}\right)^{3/2} \sin\left(\frac{n_x\pi x}{L}\right) \sin\left(\frac{n_y\pi y}{L}\right) \sin\left(\frac{n_z\pi z}{L}\right),\quad
+E_{n_x,n_y,n_z} = \frac{\pi^2\hbar^2}{2 m L^2} (n_x^2 + n_y^2 + n_z^2).
 $$
 
 The interactive “electron cloud” view draws random points under the curve of |Ψ|² via rejection sampling to convey the relative probability density.
