@@ -178,17 +178,19 @@ Running the 1D and 2D scripts will save PNG files into their respective `pics/` 
 
 ## Screenshots
 
-Below are a few representative visuals (paths are relative; run the 1D/2D scripts to generate them):
+Below are a few representative visuals (paths are relative; run the 1D/2D/3D scripts to generate them):
 
 ![1D eigenfunctions](particle%20in%20a%20box/1D/pics/eigenfunctions.png)
+
+![2D eigenfunctions (heatmaps)](particle%20in%20a%20box/2D/pics/eigenfunctions.png)
+
+![3D eigenfunctions (z=L/2 heatmaps)](particle%20in%20a%20box/3D/pics/eigenfunctions.png)
 
 ![1D energy levels](particle%20in%20a%20box/1D/pics/energy_levels.png)
 
 ![2D energy levels](particle%20in%20a%20box/2D/pics/energy_levels.png)
 
 ![3D energy levels](particle%20in%20a%20box/3D/pics/energy_levels.png)
-
-![2D eigenfunctions (heatmaps)](particle%20in%20a%20box/2D/pics/eigenfunctions.png)
 
 ## Troubleshooting
 
